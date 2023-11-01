@@ -336,9 +336,15 @@ body, html {
       <div class="time">
         Today at 11:41
       </div>
+      @php
+        $msgClass = 'parker';
+      @endphp
       <div id="message-container">
         @foreach($messages as $mk => $message)
-  		    <div class="message {{($mk%2)? 'parker': 'stark' }}">
+          @php
+            $msgClass = ($msgClass == 'stark')? 'parker': 'stark';
+          @endphp
+  		    <div class="message {{$msgClass}}">
           	{{ $message->user->name }}: {{ $message->message }}
         	</div>
 	      @endforeach
@@ -356,6 +362,7 @@ body, html {
       <input placeholder="Type your message here!" type="text" id="chat-message"/>
       <input type="hidden" value="{{ Auth::user()->name }}" id="user-name">
       <input type="hidden" value="{{ Auth::user()->id }}" id="user-id">
+      <input type="hidden" value="{{ $msgClass }}" id="last-msg-class">
       {{-- <i class="fas fa-microphone"></i> --}}
     </div>
   </div>
@@ -387,12 +394,18 @@ body, html {
 	 $('#chat-message').focusout(function(){
 	   $("#typing").hide();
 	 });
+
+   function getMsgClass() {
+      const msgClass = ($('#last-msg-class').val() == 'stark')? 'parker': 'stark';
+      $('#last-msg-class').attr('value', msgClass);
+      return msgClass;
+   }
    	
    	$('#chat-message').keypress(function (e) {
       const message  = $.trim($(this).val());
       const userName = $('#user-name').val();
 	    if(e.which == 13 && message) {
-	     $('#message-container').append('<div class="message parker">'+userName+':'+message+'</div>');
+	     $('#message-container').append('<div class="message '+getMsgClass()+'">'+userName+':'+message+'</div>');
 	     $(this).val('');
         $("#typing").hide();
 
@@ -421,7 +434,7 @@ body, html {
     .listen('ChatRoomUpdated', (e) => {
       console.log(e.chatRoom);
       if($('#user-id').val() != e.chatRoom.user.id) {
-        $('#message-container').append('<div class="message parker">'+e.chatRoom.user.name+':'+e.chatRoom.message+'</div>');
+        $('#message-container').append('<div class="message '+getMsgClass()+'">'+e.chatRoom.user.name+':'+e.chatRoom.message+'</div>');
         $("#typing").hide();
       }
     });  
