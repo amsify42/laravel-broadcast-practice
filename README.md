@@ -24,10 +24,16 @@ PUSHER_APP_KEY=your_app_key
 PUSHER_APP_SECRET=your_app_secret
 PUSHER_APP_CLUSTER=ap2
 ```
-then run npm packages
+then install npm packages
 ```
 npm install
 ```
 and for all laravel mix
-`npm run dev` or `npm run prod`
+```
+npm run dev
+```
+or
+```
+npm run prod
+```
 and you are ready to test.
