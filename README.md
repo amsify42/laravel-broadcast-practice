@@ -7,15 +7,13 @@ Make sure to create db and have these vars set in `.env`
 ```
 DB_DATABASE=you-db-name
 DB_USERNAME=root
-DB_PASSWORD=
+DB_PASSWORD=your-password
 ```
 and run
 ```
 php artisan migrate
 ```
-Create pusher account on https://pusher.com/
-<br\>
-Get app credentials from pusher and add these vars in `.env` file in root of app
+Create pusher account on https://pusher.com/ get app credentials from pusher and add these vars in `.env` file in root of app
 ```
 BROADCAST_DRIVER=pusher
 ```
@@ -31,11 +29,5 @@ then run npm packages
 npm install
 ```
 and for all laravel mix
-```
-npm run dev
-```
-or
-```
-npm run dev
-```
+`npm run dev` or `npm run prod`
 and you are ready to test.
